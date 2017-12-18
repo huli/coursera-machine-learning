@@ -16,9 +16,10 @@ J = (1 / m) * sum((-y .* log(sigmoid(X * theta)) ...
     - (1- y) .* log(1- sigmoid(X * theta)))) ...
     + (lambda / (2 * m)) * sum( theta(2:length(theta), :) .^2); 
 
-
 thetaZero = [ [ 0 ]; theta([2:length(theta)])];
 grad = (1/m) * sum((sigmoid(X * theta) - y) .* X) ...
         + (lambda / m) * thetaZero';
+        
+grad = grad(:);
 
 end
