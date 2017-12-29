@@ -46,9 +46,40 @@ cost = (1 / m) * sum(sum((-Y .* log(a_3) - (1- Y) .* log(1- a_3))));
 regularization_cost = (lambda/ (2*m)) * (sum(sum(Theta1(:, 2:end) .**2)) ...
                               + sum(sum(Theta2(:, 2:end) .**2)));
 
+% Calculating total cost
 J = cost + regularization_cost;
 
+% Calculating the gradient with backpropagation
+delta_1 = 0;
+delta_2 = 0;
 
+for i = 1:m
+  
+    a1 = [1;  X(i, :)']; 
+    z2 = Theta1 * a1;
+    a2 = [1; sigmoid(z2)]; 
+    z3 = Theta2 * a2;
+    a3 = sigmoid(z3);
+
+    % Compute delta for output layer
+    d3 = a3 - Y(i, :)';
+    
+    % Compute delta for hidden layer
+    d2 = (Theta2(:, 2:end)' * d3) .* sigmoidGradient(z2);
+
+    % Accumulate gradients
+    delta_2 += (d3 * a2');
+    delta_1 += (d2 * a1');
+    
+endfor
+
+% Calculating gradient
+Theta1_grad = (1 / m) * delta_1;
+Theta2_grad = (1 / m) * delta_2;
+
+% Adding regularization
+Theta1_grad(:, 2:end) += ((lambda / m) * Theta1(:, 2:end));
+Theta2_grad(:, 2:end) += ((lambda / m) * Theta2(:, 2:end));
 
 % Unroll gradients
 grad = [Theta1_grad(:) ; Theta2_grad(:)];
