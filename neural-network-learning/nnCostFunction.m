@@ -69,8 +69,17 @@ a_2_1 = [ones(size(X,1), 1) a_2];
 z_3 = a_2_1 * Theta2';
 a_3 = sigmoid(z_3);
 
+% Computing cost
 Y = eye(num_labels)(y, :);
-J = (1 / m) * sum(sum((-Y .* log(a_3) - (1- Y) .* log(1- a_3)))); 
+cost = (1 / m) * sum(sum((-Y .* log(a_3) - (1- Y) .* log(1- a_3)))); 
+
+% Computing regularization cost
+regularization_cost = (lambda/ (2*m)) * (sum(sum(Theta1(:, 2:end) .**2)) ...
+                              + sum(sum(Theta2(:, 2:end) .**2)));
+
+J = cost + regularization_cost;
+
+
 
 % Unroll gradients
 grad = [Theta1_grad(:) ; Theta2_grad(:)];
