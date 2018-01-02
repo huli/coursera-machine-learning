@@ -16,7 +16,7 @@ J = (1/(2 * m)) * (sum((h - y) .** 2)) ...
 
 j_0 = (1/m) * (sum((h -y)' * X(:, 1)));
 j_n = (1/m) * ((h -y)' * X(:, 2:end))' ...
-          +  (lambda/m) .* theta(2:end)      
+          +  (lambda/m) .* theta(2:end) ;
      
 grad = [j_0; j_n];
   
