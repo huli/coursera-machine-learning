@@ -29,7 +29,7 @@ for c = 1:8
 endfor
 
 % get parameters of smalles errors
-[val, index] = min(errors(:, 3))
+[val, index] = min(errors(:, 3));
 
 C = errors(index, 1);
 sigma = errors(index, 2);
