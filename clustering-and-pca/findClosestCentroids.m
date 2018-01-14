@@ -11,23 +11,24 @@ K = size(centroids, 1);
 % You need to return the following variables correctly.
 idx = zeros(size(X,1), 1);
 
-% ====================== YOUR CODE HERE ======================
-% Instructions: Go over every example, find its closest centroid, and store
-%               the index inside idx at the appropriate location.
-%               Concretely, idx(i) should contain the index of the centroid
-%               closest to example i. Hence, it should be a value in the 
-%               range 1..K
-%
-% Note: You can use a for-loop over the examples to compute this.
-%
-
-
-
-
-
-
-
-% =============================================================
-
+for i = 1:rows(X)
+  
+  smallest_distance = 1000;
+  nearest_centroid = 0;
+  for c = 1:K
+   
+    % Compute distance of current centroid
+    current_distance  = euclideanDistance(X(i, :), centroids(c, :));
+    
+    % Compare to smallest distance until now
+    if(current_distance < smallest_distance)
+      smallest_distance = current_distance;
+      nearest_centroid = c;
+    end
+  end
+  
+  % Assign smallest distance to result
+  idx(i) = nearest_centroid;
+  
 end
 
