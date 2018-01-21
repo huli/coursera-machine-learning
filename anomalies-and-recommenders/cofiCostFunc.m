@@ -18,9 +18,14 @@ X_grad = zeros(size(X));
 Theta_grad = zeros(size(Theta));
 
 % calculating cost function
-error = (X * Theta' .* R) - Y;
-J = (1/2) * sum(sum(error .** 2));
+e = (X * Theta' .* R) - Y;
+J = (1/2) * sum(sum(e .** 2));
 
+% feature gradient
+X_grad = e * Theta;
+
+% parameter gradient
+Theta_grad = e' * X;
 
 grad = [X_grad(:); Theta_grad(:)];
 
