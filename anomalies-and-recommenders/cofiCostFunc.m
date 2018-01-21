@@ -17,15 +17,17 @@ J = 0;
 X_grad = zeros(size(X));
 Theta_grad = zeros(size(Theta));
 
-% calculating cost function
+% calculating cost function (with regularization)
 e = (X * Theta' .* R) - Y;
-J = (1/2) * sum(sum(e .** 2));
+J = ((1/2) * sum(sum(e .** 2))) ...
+            + ((lambda/2)  * sum(sum(Theta .** 2))) ...
+            +  ((lambda/2)  * sum(sum(X .** 2)));
 
-% feature gradient
-X_grad = e * Theta;
+% feature gradient (with regularization)
+X_grad = (e * Theta) .+ (lambda * X);
 
-% parameter gradient
-Theta_grad = e' * X;
+% parameter gradient (with regularization)
+Theta_grad = (e' * X) .+ (lambda * Theta);
 
 grad = [X_grad(:); Theta_grad(:)];
 
